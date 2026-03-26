@@ -1,7 +1,6 @@
 ---
 name: setup-workspace
 description: One-click Notion workspace initialization for paper research. Creates a paper database with 8 preconfigured views. Use when user says "setup notion", "init workspace", "create paper database", or runs this for the first time.
-allowed-tools: Bash(*), Read, Write, mcp__notion__notion-search, mcp__notion__notion-create-database, mcp__notion__notion-create-view, mcp__notion__notion-create-pages, mcp__notion__notion-update-data-source, mcp__notion__notion-fetch
 ---
 
 # Setup Notion Research Workspace

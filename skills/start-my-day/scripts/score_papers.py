@@ -26,45 +26,66 @@ from scripts.config_loader import load_config
 def score_papers(papers: list[dict], config: dict) -> list[dict]:
     """Score a list of papers using the configured scoring weights.
 
+    Phase 1: Only uses dimensions with available data (relevance, recency, quality).
+              Weights are automatically re-normalized so scores use the full 0-10 range.
+    Phase 2+: All 5 dimensions active when social/popularity data is available.
+
     Args:
         papers: List of paper dicts (from search_arxiv.py or other sources).
         config: Full configuration dict.
 
     Returns:
-        Papers with added score fields, sorted by composite_score descending.
+        Papers with added score fields (0-10 scale), sorted by composite_score descending.
     """
     weights = config["scoring"]
     domains = config["interests"].get("domains", [])
     threshold = config["display"].get("score_threshold", 0.0)
 
     for paper in papers:
-        # 1. Relevance score (0-1)
+        # 1. Relevance (internal 0-1, stored as 0-10)
         relevance = _compute_relevance(paper, domains)
-        paper["relevance_score"] = round(relevance, 3)
+        paper["relevance_score"] = round(relevance * 10, 1)
 
-        # 2. Recency score (0-1)
+        # 2. Recency (internal 0-1)
         recency = _compute_recency(paper)
 
-        # 3. Popularity score (0-1) — citations + venue
+        # 3. Popularity (internal 0-1) — citations + venue
         popularity = _compute_popularity(paper)
 
-        # 4. Social score (0-1) — GitHub + Twitter
+        # 4. Social (internal 0-1, stored as 0-10) — GitHub + Twitter
         social = _compute_social(paper)
-        paper["social_score"] = round(social, 3)
+        paper["social_score"] = round(social * 10, 1)
 
-        # 5. Quality score (0-1) — author proxy + abstract quality
+        # 5. Quality (internal 0-1) — author proxy + abstract quality
         quality = _compute_quality(paper)
 
-        # Composite score (weighted sum / 100)
-        composite = (
-            weights.get("relevance", 35) * relevance
-            + weights.get("recency", 15) * recency
-            + weights.get("popularity", 20) * popularity
-            + weights.get("social", 20) * social
-            + weights.get("quality", 10) * quality
-        ) / 100.0
+        # Detect which dimensions have data and re-normalize weights
+        dim_scores = {
+            "relevance": relevance,
+            "recency": recency,
+            "quality": quality,
+        }
+        # Only include popularity/social if any paper has non-zero data
+        has_popularity = (paper.get("citation_count", 0) or 0) > 0 or paper.get("conference", "")
+        has_social = (paper.get("github_stars", 0) or 0) > 0 or (paper.get("twitter_mentions", 0) or 0) > 0
 
-        paper["composite_score"] = round(composite, 3)
+        if has_popularity:
+            dim_scores["popularity"] = popularity
+        if has_social:
+            dim_scores["social"] = social
+
+        # Re-normalize: distribute unused weights proportionally to active dimensions
+        active_weight_sum = sum(weights.get(k, 0) for k in dim_scores)
+        if active_weight_sum > 0:
+            composite = sum(
+                (weights.get(k, 0) / active_weight_sum) * v
+                for k, v in dim_scores.items()
+            )
+        else:
+            composite = 0.0
+
+        # Scale to 0-10 for display
+        paper["composite_score"] = round(composite * 10, 1)
 
         # Assign best-matching domain
         paper["domain"] = _assign_domain(paper, domains)
@@ -72,7 +93,7 @@ def score_papers(papers: list[dict], config: dict) -> list[dict]:
     # Sort by composite score descending
     papers.sort(key=lambda p: p["composite_score"], reverse=True)
 
-    # Filter by threshold
+    # Filter by threshold (threshold is now on 0-10 scale)
     papers = [p for p in papers if p["composite_score"] >= threshold]
 
     return papers
@@ -251,8 +272,8 @@ def main():
     # Summary to stderr
     print(f"\n# Scored {len(scored)} papers (threshold: {config['display'].get('score_threshold', 0)})", file=sys.stderr)
     if scored:
-        print(f"# Top score: {scored[0]['composite_score']:.1%} — {scored[0]['title'][:60]}", file=sys.stderr)
-        print(f"# Bottom score: {scored[-1]['composite_score']:.1%}", file=sys.stderr)
+        print(f"# Top score: {scored[0]['composite_score']}/10 — {scored[0]['title'][:60]}", file=sys.stderr)
+        print(f"# Bottom score: {scored[-1]['composite_score']}/10", file=sys.stderr)
 
 
 if __name__ == "__main__":

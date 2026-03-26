@@ -130,7 +130,7 @@ scoring:
 display:
   daily_top_n: 15          # papers shown per daily run
   deep_analyze_top: 3      # auto-analyze top N papers
-  score_threshold: 0.3     # minimum composite score to include (0-1)
+  score_threshold: 3.0     # minimum composite score to include (0-10 scale)
 
 # ============================================================
 # Team Collaboration (Phase 3)

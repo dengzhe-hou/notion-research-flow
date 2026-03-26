@@ -6,9 +6,7 @@ Since Notion operations are performed via Claude Code's MCP tools (not direct AP
 these helpers format data structures and generate instructions for the SKILL.md prompts.
 """
 
-import json
 from datetime import datetime
-from typing import Any
 
 
 def format_paper_for_notion(paper: dict) -> dict:
@@ -74,7 +72,7 @@ def generate_create_pages_markdown(papers: list[dict]) -> str:
 
     for i, paper in enumerate(papers, 1):
         title = _truncate(paper.get("title", ""), 60)
-        score = f"{paper.get('composite_score', 0):.0%}"
+        score = f"{paper.get('composite_score', 0)}/10"
         domain = paper.get("domain", "Other")
         source = paper.get("source", "arXiv")
         lines.append(f"| {i} | {title} | {score} | {domain} | {source} |")
@@ -115,9 +113,9 @@ def generate_database_ddl(config: dict) -> str:
   "Abstract" RICH_TEXT,
   "Domain" SELECT({domain_select}),
   "Tags" MULTI_SELECT,
-  "Composite Score" NUMBER FORMAT 'percent',
-  "Relevance Score" NUMBER FORMAT 'percent',
-  "Social Score" NUMBER FORMAT 'percent',
+  "Composite Score" NUMBER COMMENT '0-10 scale',
+  "Relevance Score" NUMBER COMMENT '0-10 scale',
+  "Social Score" NUMBER COMMENT '0-10 scale',
   "Citation Count" NUMBER,
   "GitHub Stars" NUMBER,
   "Twitter Mentions" NUMBER,
@@ -130,7 +128,7 @@ def generate_database_ddl(config: dict) -> str:
   "PDF URL" URL,
   "Source URL" URL,
   "Source" SELECT('arXiv':blue, 'Semantic Scholar':green, 'DBLP':orange, 'Manual':gray),
-  "Paper ID" UNIQUE_ID PREFIX 'P'
+  "Paper ID" UNIQUE_ID PREFIX 'PAP'
 )'''
     return ddl
 

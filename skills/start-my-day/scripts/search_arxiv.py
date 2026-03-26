@@ -51,7 +51,8 @@ def search_arxiv(
     # Strategy 1: Search by category
     for cat in categories:
         query = f"cat:{cat}"
-        new_papers = _query_arxiv(query, max_results=max_results // len(categories) + 5)
+        per_cat = max_results // max(len(categories), 1) + 5
+        new_papers = _query_arxiv(query, max_results=per_cat)
         for p in new_papers:
             if p["arxiv_id"] not in seen_ids:
                 seen_ids.add(p["arxiv_id"])
@@ -109,7 +110,11 @@ def _query_arxiv(query: str, max_results: int = 50) -> list[dict]:
         print(f"Warning: arXiv query failed for '{query}': {e}", file=sys.stderr)
         return []
 
-    root = ET.fromstring(data)
+    try:
+        root = ET.fromstring(data)
+    except ET.ParseError as e:
+        print(f"Warning: Failed to parse arXiv response for '{query}': {e}", file=sys.stderr)
+        return []
     papers = []
 
     for entry in root.findall(f"{{{NS}}}entry"):

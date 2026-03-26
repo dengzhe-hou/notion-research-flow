@@ -1,7 +1,6 @@
 ---
 name: start-my-day
 description: Daily paper discovery — fetches recent arXiv papers, scores them, and pushes to your Notion database. Use when user says "start my day", "daily papers", "today's papers", "what's new", or wants paper recommendations.
-allowed-tools: Bash(*), Read, Write, mcp__notion__notion-search, mcp__notion__notion-create-pages, mcp__notion__notion-fetch
 ---
 
 # Start My Day — Daily Paper Discovery
@@ -76,9 +75,9 @@ For each paper, set these properties:
 - **Authors**: authors string
 - **Abstract**: abstract (truncated to 2000 chars)
 - **Domain**: assigned domain from scoring
-- **Composite Score**: composite_score (as percentage, e.g. 0.75)
-- **Relevance Score**: relevance_score (as percentage)
-- **Social Score**: social_score (as percentage)
+- **Composite Score**: composite_score (0-10 scale, e.g. 8.1)
+- **Relevance Score**: relevance_score (0-10 scale)
+- **Social Score**: social_score (0-10 scale)
 - **Citation Count**: citation_count
 - **Added Date**: today's date
 - **Published Date**: published_date
@@ -89,48 +88,95 @@ For each paper, set these properties:
 
 You can batch multiple pages in a single `notion-create-pages` call for efficiency.
 
-### Step 6: Generate TL;DR for Top Papers
+### Step 6: Write Rich Content to Each Paper Page
 
-For the top `deep_analyze_top` papers (default 3):
-
-Read the paper's abstract carefully and generate a brief analysis:
+For EVERY paper pushed to Notion, update the page content (not just properties) with structured analysis using `mcp__notion__notion-update-page` with `replace_content`:
 
 ```markdown
-### [Rank]. [Title]
-**Score**: [composite_score]% | **Domain**: [domain] | **arXiv**: [arxiv_id]
+## TL;DR
+[1-2 sentence summary: what the paper does + key quantitative result]
 
-**TL;DR**: [1-2 sentence summary of the key contribution]
+## Core Contributions
+- [Contribution 1 — the main novelty]
+- [Contribution 2 — the technical approach]
+- [Contribution 3 — key result or insight]
 
-**Why it matters**: [1 sentence on relevance to user's research interests]
+## Key Results
+| Metric | Value |
+|--------|-------|
+| [main benchmark] | [number] |
+| [comparison] | [vs baseline] |
 
-**PDF**: [pdf_url]
+## Why It Matters
+[1-2 sentences connecting this paper to the user's research interests from config.yaml]
+
+## Links
+- [PDF](pdf_url) | [Abstract](source_url) | [Code](github_url if available)
 ```
 
-### Step 7: Present Summary
+### Step 7: Create Daily Digest Page
 
-Display the complete results:
+Create a standalone Notion page (under the Research parent page) as the daily overview:
+
+**Title**: `YYYY-MM-DD Daily Paper Digest`
+**Icon**: chart emoji
+
+**Content structure**:
+```markdown
+## Overview
+**N new papers** added today. Domains: [list domains found].
+
+## Research Trends
+[3-4 bullet points summarizing themes across today's papers]
+
+## Today's Top 3
+### 1. [Title] ([score]/10)
+[2-3 sentence summary + why it's #1]
+→ [Link to Notion page]
+
+### 2. [Title] ([score]/10)
+[2-3 sentence summary]
+→ [Link to Notion page]
+
+### 3. [Title] ([score]/10)
+[2-3 sentence summary]
+→ [Link to Notion page]
+
+## Reading Recommendations
+| Priority | Paper | Why Read |
+|----------|-------|----------|
+| ⭐⭐⭐ | [best paper] | [reason] |
+| ⭐⭐ | [next] | [reason] |
+| ⭐ | [next] | [reason] |
+
+## Score Distribution (0-10 scale)
+- **8.0+**: N papers — [names]
+- **7.0-8.0**: N papers — [names]
+- **6.0-7.0**: N papers — [names]
+```
+
+### Step 8: Present Summary to User
+
+Display the complete results in the conversation:
 
 ```markdown
 ## Daily Paper Recommendations — [today's date]
 
 Found **N** new papers (**M** already in library, skipped).
 
-### Top Recommendations
+### Top 3
+| # | Score | Title | Domain |
+|---|-------|-------|--------|
+| 1 | 8.1/10 | ... | LLM |
+| 2 | 7.9/10 | ... | VLM |
+| 3 | 7.7/10 | ... | LLM |
 
-[TL;DR for top 3 papers from Step 6]
-
-### All Papers
-
-| # | Score | Title | Domain | arXiv ID |
-|---|-------|-------|--------|----------|
-| 1 | 75%   | ...   | LLM    | 2603.xxxxx |
-| 2 | 68%   | ...   | VLM    | 2603.xxxxx |
-...
+📊 Daily Digest → [link to digest page]
+📚 Paper Library → [link to database]
 
 ### Next Steps
 - `/paper-analyze [arxiv_id]` — deep-read any paper above
 - `/paper-search [keyword]` — search your library
-- `/conf-papers [conference] [year]` — track conference papers
 ```
 
 ## Key Rules
@@ -141,4 +187,6 @@ Found **N** new papers (**M** already in library, skipped).
 - Show progress as you work: "Searching arXiv...", "Scoring papers...", "Pushing to Notion..."
 - If arXiv API is unreachable, report the error and suggest trying again later
 - Cap abstract at 2000 characters to stay within Notion's rich text limits
-- The scoring engine works even without social signals (Phase 1) — social_score will be 0
+- Scores use 0-10 scale (not percentage). Phase 1 uses 3 active dimensions (relevance/recency/quality), re-normalized to full range
+- EVERY paper page must have rich content (TL;DR, contributions, results, links) — not just database properties
+- ALWAYS create a daily digest page with trends, top 3 analysis, and reading recommendations

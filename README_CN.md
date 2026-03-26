@@ -111,7 +111,7 @@ pip install -r requirements.txt
 
 ```bash
 # 1. 克隆并配置
-git clone https://github.com/YOUR_USERNAME/notion-research-flow.git
+git clone https://github.com/your-username/notion-research-flow.git
 cd notion-research-flow
 pip install -r requirements.txt
 cp config.example.yaml config.yaml
@@ -194,20 +194,17 @@ notion-research-flow/
 ├── config.example.yaml       # 配置模板
 ├── skills/
 │   ├── setup-workspace/      # 一键 Notion 初始化
-│   ├── start-my-day/         # 每日论文发现
-│   │   └── scripts/          # arXiv 搜索 + 评分引擎
-│   ├── paper-analyze/        # 深度分析 (Phase 3)
-│   ├── conf-papers/          # 会议追踪 (Phase 2)
-│   ├── paper-search/         # 论文搜索 (Phase 3)
-│   ├── team-sync/            # 团队功能 (Phase 3)
-│   └── weekly-digest/        # 每周摘要 (Phase 3)
+│   └── start-my-day/         # 每日论文发现
+│       └── scripts/          # arXiv 搜索 + 评分引擎
 ├── scripts/                  # 共享工具
-└── tests/
+└── tests/                    # 单元测试
 ```
+
+> Phase 2+ 将新增 `conf-papers/`、`paper-analyze/`、`paper-search/`、`team-sync/`、`weekly-digest/` 技能。
 
 ## 贡献
 
-欢迎贡献！详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+欢迎贡献！请提交 Issue 或 Pull Request。
 
 ## 许可证
 
