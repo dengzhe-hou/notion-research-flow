@@ -125,13 +125,24 @@ This outputs scored papers sorted by composite_score (descending).
 
 ### Step 8: Deduplicate Against Notion
 
-Before creating new entries, check for duplicates:
+Before creating new entries, check for duplicates using the **local ArXiv ID cache** (faster and more reliable than Notion search, which has indexing delays):
 
-Use `mcp__notion__notion-search` to search the paper database for each paper's arXiv ID or title.
+```bash
+cd "$REPO_ROOT"
+python3 -c "
+import sys, json
+sys.path.insert(0, '.')
+from scripts.config_loader import get_known_arxiv_ids
+known = get_known_arxiv_ids()
+papers = json.load(sys.stdin)
+new_papers = [p for p in papers if not p.get('arxiv_id') or p['arxiv_id'] not in known]
+dupes = [p for p in papers if p.get('arxiv_id') and p['arxiv_id'] in known]
+print(json.dumps({'new': new_papers, 'duplicates': dupes}))
+" <<< '$MERGED_PAPERS_JSON'
+```
 
-For any papers already in Notion:
-- If the existing entry has **lower** citation_count or missing conference, **update** it via `mcp__notion__notion-update-page` with the new data.
-- Otherwise, skip and note "already exists".
+For duplicates with ArXiv IDs, skip and note "already exists".
+For papers **without** ArXiv IDs (common from DBLP), also try `mcp__notion__notion-search` with the paper title as a fallback.
 
 ### Step 9: Push to Notion
 
@@ -161,6 +172,19 @@ Set these properties:
 - **Status**: "Not started" (default, maps to "Unread")
 
 Batch multiple pages in a single `notion-create-pages` call for efficiency.
+
+**After successful push**, update the local dedup cache:
+
+```bash
+cd "$REPO_ROOT"
+python3 -c "
+import sys
+sys.path.insert(0, '.')
+from scripts.config_loader import add_known_arxiv_ids
+# Pass the list of ArXiv IDs that were just pushed (filter out empty IDs)
+add_known_arxiv_ids($PUSHED_ARXIV_IDS_LIST)
+"
+```
 
 ### Step 10: Write Rich Content to Each Paper Page
 

@@ -70,11 +70,24 @@ With social signal data available, the scoring engine automatically activates al
 
 ### Step 5: Deduplicate Against Notion
 
-Before creating new entries, check for duplicates:
+Before creating new entries, check for duplicates using the **local ArXiv ID cache** (faster and more reliable than Notion search, which has indexing delays):
 
-Use `mcp__notion__notion-search` to search the paper database for each paper's arXiv ID.
+```bash
+cd "$REPO_ROOT"
+python3 -c "
+import sys, json
+sys.path.insert(0, '.')
+from scripts.config_loader import get_known_arxiv_ids
+known = get_known_arxiv_ids()
+papers = json.load(sys.stdin)
+new_papers = [p for p in papers if p.get('arxiv_id') not in known]
+print(json.dumps(new_papers))
+" <<< '$SCORED_PAPERS_JSON'
+```
 
-For any papers already in Notion, skip them and note "already exists".
+For any papers whose ArXiv ID is already in the cache, skip them and note "already exists".
+
+**Fallback**: If the cache is empty (first run), also try `mcp__notion__notion-search` with paper titles to catch manually added entries.
 
 ### Step 6: Push to Notion
 
@@ -102,6 +115,19 @@ For each paper, set these properties:
 - **Status**: "Not started" (default, maps to "Unread")
 
 You can batch multiple pages in a single `notion-create-pages` call for efficiency.
+
+**After successful push**, update the local dedup cache:
+
+```bash
+cd "$REPO_ROOT"
+python3 -c "
+import sys
+sys.path.insert(0, '.')
+from scripts.config_loader import add_known_arxiv_ids
+# Pass the list of ArXiv IDs that were just pushed
+add_known_arxiv_ids($PUSHED_ARXIV_IDS_LIST)
+"
+```
 
 ### Step 7: Write Rich Content to Each Paper Page
 

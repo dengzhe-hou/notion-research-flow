@@ -120,6 +120,26 @@ def get_excluded_keywords(config: dict) -> list[str]:
     return config["interests"].get("excluded_keywords", [])
 
 
+def get_known_arxiv_ids(repo_root: Path | None = None) -> set[str]:
+    """Load the set of ArXiv IDs already pushed to Notion.
+
+    Uses a local cache in .notion-research-flow.json to avoid relying on
+    Notion search (which has indexing delays for newly created pages).
+    """
+    state = load_state(repo_root)
+    return set(state.get("known_arxiv_ids", []))
+
+
+def add_known_arxiv_ids(new_ids: list[str], repo_root: Path | None = None) -> None:
+    """Add ArXiv IDs to the local dedup cache and persist."""
+    root = repo_root or find_repo_root()
+    state = load_state(root)
+    existing = set(state.get("known_arxiv_ids", []))
+    existing.update(id_ for id_ in new_ids if id_)
+    state["known_arxiv_ids"] = sorted(existing)
+    save_state(state, root)
+
+
 if __name__ == "__main__":
     # Quick test
     try:

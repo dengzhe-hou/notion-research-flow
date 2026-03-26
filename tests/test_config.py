@@ -12,9 +12,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts.config_loader import (
     _validate_config,
+    add_known_arxiv_ids,
     get_all_categories,
     get_all_keywords,
     get_excluded_keywords,
+    get_known_arxiv_ids,
     load_state,
     save_state,
 )
@@ -110,6 +112,42 @@ def test_load_state_missing():
     with tempfile.TemporaryDirectory() as tmpdir:
         loaded = load_state(repo_root=Path(tmpdir))
         assert loaded == {}
+
+
+def test_known_arxiv_ids_empty():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        known = get_known_arxiv_ids(repo_root=Path(tmpdir))
+        assert known == set()
+
+
+def test_add_known_arxiv_ids():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        # Create initial state file
+        save_state({"setup_complete": True}, repo_root=root)
+
+        add_known_arxiv_ids(["2301.07041", "2603.24533"], repo_root=root)
+        known = get_known_arxiv_ids(repo_root=root)
+        assert "2301.07041" in known
+        assert "2603.24533" in known
+
+        # Add more, including a duplicate and empty string
+        add_known_arxiv_ids(["2301.07041", "2603.99999", ""], repo_root=root)
+        known = get_known_arxiv_ids(repo_root=root)
+        assert len(known) == 3  # no duplicates, no empty
+        assert "2603.99999" in known
+
+
+def test_known_arxiv_ids_persists():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        save_state({"paper_database_id": "abc"}, repo_root=root)
+        add_known_arxiv_ids(["1234.56789"], repo_root=root)
+
+        # Reload state and check both original keys and cache are preserved
+        state = load_state(repo_root=root)
+        assert state["paper_database_id"] == "abc"
+        assert "1234.56789" in state["known_arxiv_ids"]
 
 
 if __name__ == "__main__":
