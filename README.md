@@ -109,7 +109,7 @@ pip install -r requirements.txt
 
 ```bash
 # 1. Clone and configure
-git clone https://github.com/your-username/notion-research-flow.git
+git clone https://github.com/dengzhe-hou/notion-research-flow.git
 cd notion-research-flow
 pip install -r requirements.txt
 cp config.example.yaml config.yaml

@@ -50,7 +50,7 @@ pip install -r requirements.txt
 ## Step 2: Clone & Configure / 克隆并配置
 
 ```bash
-git clone https://github.com/your-username/notion-research-flow.git
+git clone https://github.com/dengzhe-hou/notion-research-flow.git
 cd notion-research-flow
 pip install -r requirements.txt
 
