@@ -27,22 +27,24 @@
 
 ## Features
 
-### Phase 1 (Current)
+### Setup & Daily Discovery
 - `/setup-workspace` — One-click Notion database + 8 preconfigured views
-- `/start-my-day` — Daily arXiv paper discovery with 3D scoring (relevance + recency + quality)
+- `/start-my-day` — Daily arXiv paper discovery with 5D scoring + social signal enrichment
 - Automatic deduplication against existing library
 - Top-N paper TL;DR generation by Claude
 
-### Phase 2 (Planned)
-- Multi-source: Semantic Scholar + DBLP conference papers
-- 5D scoring: adds popularity (citations) + social signals (GitHub stars, Twitter buzz)
-- `/conf-papers` — Conference paper tracking
+### Multi-Source & Conference Tracking
+- `/conf-papers` — Conference paper tracking via Semantic Scholar + DBLP
+- 5D scoring: relevance + recency + popularity (citations) + social signals (GitHub stars, Twitter) + quality
+- Venue normalization (full conference names → standard abbreviations)
 
-### Phase 3 (Planned)
-- `/paper-analyze` — Deep paper analysis with PDF extraction
-- `/paper-search` — Search across your Notion library
-- `/team-sync` — Team collaboration: assign papers, discuss, track progress
-- `/weekly-digest` — Auto-generated weekly summary
+### Deep Analysis & Search
+- `/paper-analyze` — Deep paper analysis with PDF extraction (PyMuPDF)
+- `/paper-search` — Search across your Notion library by keyword, domain, score, status, or date
+
+### Team Collaboration & Reporting
+- `/team-sync` — Assign papers, view assignments, track team reading progress
+- `/weekly-digest` — Auto-generated weekly summary with trends, top papers, and domain breakdown
 
 ## 5D Scoring Engine
 
@@ -195,16 +197,24 @@ A: We use Notion (not Obsidian) as the backend, which enables database views, te
 
 ```
 notion-research-flow/
-├── config.example.yaml       # Config template
+├── config.example.yaml          # Config template (5D scoring, multi-source, team)
+├── scripts/                     # Shared utilities
+│   ├── config_loader.py         # Config loading & validation
+│   ├── notion_helpers.py        # Notion DDL, views, formatting
+│   └── fetch_social_signals.py  # GitHub stars + Twitter enrichment
 ├── skills/
-│   ├── setup-workspace/      # One-click Notion setup
-│   └── start-my-day/         # Daily paper discovery
-│       └── scripts/          # arXiv search + scoring engine
-├── scripts/                  # Shared utilities
-└── tests/                    # Unit tests
+│   ├── setup-workspace/         # One-click Notion setup
+│   ├── start-my-day/            # Daily arXiv discovery + 5D scoring
+│   │   └── scripts/             # search_arxiv.py + score_papers.py
+│   ├── conf-papers/             # Conference paper tracking
+│   │   └── scripts/             # search_semantic_scholar.py + search_dblp.py
+│   ├── paper-analyze/           # Deep paper analysis
+│   │   └── scripts/             # extract_pdf.py (PyMuPDF)
+│   ├── paper-search/            # Notion library search
+│   ├── team-sync/               # Team assignment & progress
+│   └── weekly-digest/           # Weekly research summary
+└── tests/                       # 58 unit tests (scoring, search, extraction)
 ```
-
-> Phase 2+ will add `conf-papers/`, `paper-analyze/`, `paper-search/`, `team-sync/`, `weekly-digest/` skills.
 
 ## Contributing
 
