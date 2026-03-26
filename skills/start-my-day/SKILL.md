@@ -44,9 +44,21 @@ python3 skills/start-my-day/scripts/search_arxiv.py --config config.yaml
 
 This outputs a JSON array of papers to stdout. Capture the output.
 
-### Step 3: Score & Rank Papers
+### Step 3: Enrich with Social Signals
 
-Pipe the search results through the scoring engine:
+If `social.github.enabled` or `social.twitter.enabled` is true in config, pipe papers through the social signal enrichment:
+
+```bash
+cd "$REPO_ROOT"
+echo '$PAPERS_JSON' | python3 scripts/fetch_social_signals.py --config config.yaml
+```
+
+This populates `github_stars` and `twitter_mentions` fields. Capture the enriched output.
+If social signals are disabled in config, skip this step and use the raw search results.
+
+### Step 4: Score & Rank Papers
+
+Pipe the (optionally enriched) papers through the scoring engine:
 
 ```bash
 cd "$REPO_ROOT"
@@ -54,8 +66,9 @@ echo '$PAPERS_JSON' | python3 skills/start-my-day/scripts/score_papers.py --conf
 ```
 
 This outputs scored papers sorted by composite_score (descending), capped at `daily_top_n`.
+With social signal data available, the scoring engine automatically activates all 5 dimensions.
 
-### Step 4: Deduplicate Against Notion
+### Step 5: Deduplicate Against Notion
 
 Before creating new entries, check for duplicates:
 
@@ -63,7 +76,7 @@ Use `mcp__notion__notion-search` to search the paper database for each paper's a
 
 For any papers already in Notion, skip them and note "already exists".
 
-### Step 5: Push to Notion
+### Step 6: Push to Notion
 
 For each new (non-duplicate) paper, create a Notion page using `mcp__notion__notion-create-pages`.
 
@@ -79,6 +92,8 @@ For each paper, set these properties:
 - **Relevance Score**: relevance_score (0-10 scale)
 - **Social Score**: social_score (0-10 scale)
 - **Citation Count**: citation_count
+- **GitHub Stars**: github_stars
+- **Twitter Mentions**: twitter_mentions
 - **Added Date**: today's date
 - **Published Date**: published_date
 - **PDF URL**: pdf_url
@@ -88,7 +103,7 @@ For each paper, set these properties:
 
 You can batch multiple pages in a single `notion-create-pages` call for efficiency.
 
-### Step 6: Write Rich Content to Each Paper Page
+### Step 7: Write Rich Content to Each Paper Page
 
 For EVERY paper pushed to Notion, update the page content (not just properties) with structured analysis using `mcp__notion__notion-update-page` with `replace_content`:
 
@@ -114,7 +129,7 @@ For EVERY paper pushed to Notion, update the page content (not just properties) 
 - [PDF](pdf_url) | [Abstract](source_url) | [Code](github_url if available)
 ```
 
-### Step 7: Create Daily Digest Page
+### Step 8: Create Daily Digest Page
 
 Create a standalone Notion page (under the Research parent page) as the daily overview:
 
@@ -155,7 +170,7 @@ Create a standalone Notion page (under the Research parent page) as the daily ov
 - **6.0-7.0**: N papers — [names]
 ```
 
-### Step 8: Present Summary to User
+### Step 9: Present Summary to User
 
 Display the complete results in the conversation:
 
@@ -187,6 +202,6 @@ Found **N** new papers (**M** already in library, skipped).
 - Show progress as you work: "Searching arXiv...", "Scoring papers...", "Pushing to Notion..."
 - If arXiv API is unreachable, report the error and suggest trying again later
 - Cap abstract at 2000 characters to stay within Notion's rich text limits
-- Scores use 0-10 scale (not percentage). Phase 1 uses 3 active dimensions (relevance/recency/quality), re-normalized to full range
+- Scores use 0-10 scale (not percentage). With social signal data, all 5 dimensions are active; without, weights auto-redistribute to active dimensions
 - EVERY paper page must have rich content (TL;DR, contributions, results, links) — not just database properties
 - ALWAYS create a daily digest page with trends, top 3 analysis, and reading recommendations

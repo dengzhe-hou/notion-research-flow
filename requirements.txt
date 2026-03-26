@@ -1,5 +1,5 @@
 PyYAML>=6.0
 requests>=2.28.0
 
-# Phase 3 (paper-analyze): uncomment when needed
-# PyMuPDF>=1.23.0
+# Phase 3 (paper-analyze): PDF extraction
+PyMuPDF>=1.23.0

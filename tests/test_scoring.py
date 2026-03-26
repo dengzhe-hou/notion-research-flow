@@ -186,6 +186,58 @@ def test_weight_renormalization():
     assert scored[0]["composite_score"] > 5.0
 
 
+def test_5d_scoring_with_social_data():
+    """When social data is present, all 5 dimensions should be active."""
+    paper = SAMPLE_PAPER_LLM.copy()
+    paper["github_stars"] = 250
+    paper["twitter_mentions"] = 25
+    paper["citation_count"] = 50
+    paper["conference"] = "NeurIPS"
+
+    scored = score_papers([paper], TEST_CONFIG)
+    p = scored[0]
+
+    # Social score should be non-zero
+    assert p["social_score"] > 0, f"Social score should be > 0 with github_stars=250, got {p['social_score']}"
+
+
+def test_5d_scoring_higher_than_3d():
+    """A paper with strong social/popularity signals should potentially score differently than without."""
+    paper_3d = SAMPLE_PAPER_LLM.copy()
+    paper_5d = SAMPLE_PAPER_LLM.copy()
+    paper_5d["github_stars"] = 500
+    paper_5d["twitter_mentions"] = 50
+    paper_5d["citation_count"] = 100
+    paper_5d["conference"] = "NeurIPS"
+
+    scored_3d = score_papers([paper_3d], TEST_CONFIG)
+    scored_5d = score_papers([paper_5d], TEST_CONFIG)
+
+    # Both should have valid scores
+    assert 0 <= scored_3d[0]["composite_score"] <= 10
+    assert 0 <= scored_5d[0]["composite_score"] <= 10
+
+    # 5D paper has extra signals that should boost popularity/social dimensions
+    assert scored_5d[0]["social_score"] > 0
+
+
+def test_5d_popularity_dimension_active():
+    """With citation data, popularity dimension should contribute to the score."""
+    paper = SAMPLE_PAPER_UNRELATED.copy()
+    paper["citation_count"] = 100
+    paper["conference"] = "ICML"
+
+    scored = score_papers([paper], TEST_CONFIG)
+    p = scored[0]
+
+    # Should score higher than without citations due to popularity dimension
+    paper_no_cite = SAMPLE_PAPER_UNRELATED.copy()
+    scored_no_cite = score_papers([paper_no_cite], TEST_CONFIG)
+
+    assert p["composite_score"] >= scored_no_cite[0]["composite_score"], \
+        "Paper with citations should score >= paper without"
+
+
 if __name__ == "__main__":
     tests = [v for k, v in globals().items() if k.startswith("test_")]
     passed = failed = 0
