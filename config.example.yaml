@@ -1,0 +1,186 @@
+# notion-research-flow Configuration
+# Copy this file to config.yaml and customize for your research interests
+# cp config.example.yaml config.yaml
+
+# ============================================================
+# Researcher Profile
+# ============================================================
+researcher:
+  name: "Your Name"
+  language: "en"  # "en" | "zh" | "bilingual"
+
+# ============================================================
+# Research Interests
+# These drive paper scoring and filtering across all skills
+# ============================================================
+interests:
+  domains:
+    - name: "Large Language Models"
+      priority: 8  # 1-10, higher = more important
+      keywords:
+        - "large language model"
+        - "LLM"
+        - "in-context learning"
+        - "chain-of-thought"
+        - "instruction tuning"
+        - "RLHF"
+      arxiv_categories:
+        - "cs.CL"
+        - "cs.AI"
+
+    - name: "Vision-Language Models"
+      priority: 7
+      keywords:
+        - "vision-language"
+        - "VLM"
+        - "multimodal"
+        - "visual grounding"
+        - "image-text"
+        - "CLIP"
+      arxiv_categories:
+        - "cs.CV"
+        - "cs.CL"
+        - "cs.MM"
+
+    - name: "Diffusion Models"
+      priority: 6
+      keywords:
+        - "diffusion model"
+        - "score matching"
+        - "denoising"
+        - "text-to-image"
+        - "image generation"
+      arxiv_categories:
+        - "cs.CV"
+        - "cs.LG"
+
+    - name: "Reinforcement Learning"
+      priority: 5
+      keywords:
+        - "reinforcement learning"
+        - "reward model"
+        - "policy optimization"
+        - "RLHF"
+        - "PPO"
+      arxiv_categories:
+        - "cs.LG"
+        - "cs.AI"
+
+  # Keywords to always exclude from results
+  excluded_keywords:
+    - "survey only"
+    - "workshop abstract"
+
+# ============================================================
+# Paper Sources
+# ============================================================
+sources:
+  arxiv:
+    enabled: true
+    max_results: 50        # max papers per query
+    lookback_days: 3       # how far back to search
+
+  semantic_scholar:
+    enabled: true
+    api_key: ""            # optional, reduces rate limits (free at semanticscholar.org)
+    min_citations: 0       # minimum citation count filter
+    lookback_days: 30      # search window for high-impact papers
+
+  dblp:
+    enabled: true
+    conferences:           # tracked conferences for /conf-papers
+      - "NeurIPS"
+      - "ICML"
+      - "ICLR"
+      - "ACL"
+      - "EMNLP"
+      - "CVPR"
+      - "ICCV"
+      - "ECCV"
+      - "AAAI"
+      - "IJCAI"
+
+# ============================================================
+# Social Signals (Phase 2)
+# ============================================================
+social:
+  github:
+    enabled: true
+    token: ""              # optional GITHUB_TOKEN for higher rate limits
+    min_stars: 10          # minimum stars to boost score
+
+  twitter:
+    enabled: true          # uses web search fallback (free, no API key needed)
+    # bearer_token: ""     # optional X API token for direct access
+
+# ============================================================
+# Scoring Weights
+# Must sum to 100. Adjust to match your priorities.
+# ============================================================
+scoring:
+  relevance: 35            # keyword + category match
+  recency: 15              # how new the paper is
+  popularity: 20           # citations + venue prestige
+  social: 20               # github stars + twitter buzz
+  quality: 10              # author h-index proxy
+
+# ============================================================
+# Display & Limits
+# ============================================================
+display:
+  daily_top_n: 15          # papers shown per daily run
+  deep_analyze_top: 3      # auto-analyze top N papers
+  score_threshold: 0.3     # minimum composite score to include (0-1)
+
+# ============================================================
+# Team Collaboration (Phase 3)
+# ============================================================
+team:
+  enabled: false
+  # Team members are auto-discovered from Notion workspace
+  # Use /team-sync to assign papers and manage reading groups
+
+# ============================================================
+# Notion Database Customization
+# ============================================================
+notion:
+  # Domain options for the paper database SELECT field
+  # Customize these to match your research areas
+  domain_options:
+    - name: "LLM"
+      color: "blue"
+    - name: "VLM"
+      color: "purple"
+    - name: "Diffusion"
+      color: "pink"
+    - name: "RL"
+      color: "orange"
+    - name: "NLP"
+      color: "green"
+    - name: "CV"
+      color: "yellow"
+    - name: "Other"
+      color: "gray"
+
+  # Conference options
+  conference_options:
+    - name: "NeurIPS"
+      color: "blue"
+    - name: "ICML"
+      color: "green"
+    - name: "ICLR"
+      color: "purple"
+    - name: "ACL"
+      color: "orange"
+    - name: "EMNLP"
+      color: "yellow"
+    - name: "CVPR"
+      color: "pink"
+    - name: "ICCV"
+      color: "red"
+    - name: "ECCV"
+      color: "brown"
+    - name: "AAAI"
+      color: "default"
+    - name: "Preprint"
+      color: "gray"

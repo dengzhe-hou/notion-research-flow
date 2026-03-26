@@ -1,0 +1,29 @@
+# User-specific config and state
+config.yaml
+.notion-research-flow.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Downloaded papers
+papers/
+*.pdf
