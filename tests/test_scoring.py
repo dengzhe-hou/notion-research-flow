@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "start-my-day" / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".claude" / "skills" / "start-my-day" / "scripts"))
 
 from score_papers import (
     score_papers,

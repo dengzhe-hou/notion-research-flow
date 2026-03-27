@@ -128,6 +128,7 @@ def generate_database_ddl(config: dict) -> str:
   "PDF URL" URL,
   "Source URL" URL,
   "Source" SELECT('arXiv':blue, 'Semantic Scholar':green, 'DBLP':orange, 'Manual':gray),
+  "Related Papers" RELATION(self) COMMENT 'Link related papers (same topic, author, or citation chain)',
   "Paper ID" UNIQUE_ID PREFIX 'PAP'
 )'''
     return ddl

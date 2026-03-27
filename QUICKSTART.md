@@ -75,17 +75,15 @@ interests:
 
 ---
 
-## Step 3: Install Skills / 安装技能
+## Step 3: One-Click Setup / 一键配置
 
 ```bash
-# Option A: Symlink (recommended — auto-syncs updates)
-# 方式 A: 软链接（推荐，自动同步更新）
-ln -s $(pwd)/skills/* ~/.claude/skills/
-
-# Option B: Copy
-# 方式 B: 复制
-cp -r skills/* ~/.claude/skills/
+./setup.sh
 ```
+
+This installs dependencies, configures Notion MCP, and creates `config.yaml`.
+
+Skills are bundled in `.claude/skills/` and auto-discovered by Claude Code — no manual installation needed.
 
 ---
 

@@ -110,16 +110,12 @@ pip install -r requirements.txt
 ## Quick Start
 
 ```bash
-# 1. Clone and configure
+# 1. Clone and setup
 git clone https://github.com/dengzhe-hou/notion-research-flow.git
 cd notion-research-flow
-pip install -r requirements.txt
-cp config.example.yaml config.yaml
-# Edit config.yaml with your research interests
+./setup.sh    # installs deps, configures MCP, creates config.yaml
 
-# 2. Install skills to Claude Code (project-level)
-mkdir -p .claude/skills
-ln -s $(pwd)/skills/* .claude/skills/
+# 2. Edit config.yaml with your research interests
 
 # 3. Use in Claude Code
 ```
@@ -180,6 +176,23 @@ crontab -e
 /loop 24h /start-my-day
 ```
 
+## Troubleshooting
+
+**Notion MCP shows "Needs authentication"**
+
+OAuth tokens expire periodically. To re-authorize:
+
+```bash
+claude mcp remove notion
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+```
+
+Then restart Claude Code and run any Notion command — the browser will prompt for re-authorization.
+
+**Skills not found (e.g., `/start-my-day` not recognized)**
+
+Make sure you're running Claude Code from within the `notion-research-flow` directory. Skills in `.claude/skills/` are only discovered when Claude Code's working directory is the project root.
+
 ## FAQ
 
 **Q: Will this affect my existing Notion content?**
@@ -194,16 +207,20 @@ A: No. arXiv, Semantic Scholar, and DBLP APIs are all free. Social signals use f
 **Q: How is this different from evil-read-arxiv?**
 A: We use Notion (not Obsidian) as the backend, which enables database views, team collaboration, and a richer filtering experience. We also add social signal scoring (GitHub + Twitter) as a 5th dimension.
 
+**Q: How does this relate to ARIS?**
+A: [ARIS](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) covers the full research lifecycle (idea → experiment → paper → rebuttal), while notion-research-flow focuses on paper discovery and library management via Notion. They complement each other — use ARIS for research execution and notion-research-flow for organizing your reading.
+
 ## Project Structure
 
 ```
 notion-research-flow/
+├── setup.sh                     # One-click setup script
 ├── config.example.yaml          # Config template (5D scoring, multi-source, team)
 ├── scripts/                     # Shared utilities
 │   ├── config_loader.py         # Config loading & validation
 │   ├── notion_helpers.py        # Notion DDL, views, formatting
 │   └── fetch_social_signals.py  # GitHub stars + Twitter enrichment
-├── skills/
+├── .claude/skills/              # Claude Code auto-discovered skills
 │   ├── setup-workspace/         # One-click Notion setup
 │   ├── start-my-day/            # Daily arXiv discovery + 5D scoring
 │   │   └── scripts/             # search_arxiv.py + score_papers.py

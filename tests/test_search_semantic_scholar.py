@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "conf-papers" / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".claude" / "skills" / "conf-papers" / "scripts"))
 
 from search_semantic_scholar import (
     search_semantic_scholar,

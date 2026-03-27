@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "paper-analyze" / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / ".claude" / "skills" / "paper-analyze" / "scripts"))
 
 from extract_pdf import _detect_sections
 

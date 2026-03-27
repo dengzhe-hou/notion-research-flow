@@ -13,8 +13,8 @@ build/
 venv/
 .venv/
 
-# Claude Code (local symlinks)
-.claude/
+# Claude Code (keep skills, ignore local settings)
+.claude/settings.local.json
 
 # IDE
 .vscode/

@@ -48,7 +48,7 @@ Run the DBLP search script:
 
 ```bash
 cd "$REPO_ROOT"
-python3 skills/conf-papers/scripts/search_dblp.py --config config.yaml --conference "$CONFERENCE" --year "$YEAR" --keywords "$KEYWORDS"
+python3 .claude/skills/conf-papers/scripts/search_dblp.py --config config.yaml --conference "$CONFERENCE" --year "$YEAR" --keywords "$KEYWORDS"
 ```
 
 This outputs a JSON array of papers from DBLP. Capture the output as `$DBLP_PAPERS`.
@@ -59,7 +59,7 @@ Run the Semantic Scholar search script:
 
 ```bash
 cd "$REPO_ROOT"
-python3 skills/conf-papers/scripts/search_semantic_scholar.py --config config.yaml --conference "$CONFERENCE" --year "$YEAR" --keywords "$KEYWORDS"
+python3 .claude/skills/conf-papers/scripts/search_semantic_scholar.py --config config.yaml --conference "$CONFERENCE" --year "$YEAR" --keywords "$KEYWORDS"
 ```
 
 This outputs a JSON array of papers. Capture the output as `$S2_PAPERS`.
@@ -118,7 +118,7 @@ Pipe enriched papers through the scoring engine:
 
 ```bash
 cd "$REPO_ROOT"
-echo '$ENRICHED_JSON' | python3 skills/start-my-day/scripts/score_papers.py --config config.yaml
+echo '$ENRICHED_JSON' | python3 .claude/skills/start-my-day/scripts/score_papers.py --config config.yaml
 ```
 
 This outputs scored papers sorted by composite_score (descending).

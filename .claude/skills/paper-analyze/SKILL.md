@@ -52,7 +52,7 @@ Run the PDF extraction script:
 
 ```bash
 cd "$REPO_ROOT"
-python3 skills/paper-analyze/scripts/extract_pdf.py --arxiv-id "$ARXIV_ID"
+python3 .claude/skills/paper-analyze/scripts/extract_pdf.py --arxiv-id "$ARXIV_ID"
 ```
 
 This outputs a JSON dict with: `full_text`, `page_count`, `sections`.
@@ -60,7 +60,7 @@ This outputs a JSON dict with: `full_text`, `page_count`, `sections`.
 If the paper has no arXiv ID (e.g., from DBLP), try the `pdf_url` from the Notion page:
 
 ```bash
-python3 skills/paper-analyze/scripts/extract_pdf.py --url "$PDF_URL"
+python3 .claude/skills/paper-analyze/scripts/extract_pdf.py --url "$PDF_URL"
 ```
 
 If PDF download fails, fall back to analyzing the abstract only and note the limitation.

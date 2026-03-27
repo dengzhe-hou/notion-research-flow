@@ -39,7 +39,7 @@ Run the arXiv search script:
 
 ```bash
 cd "$REPO_ROOT"
-python3 skills/start-my-day/scripts/search_arxiv.py --config config.yaml
+python3 .claude/skills/start-my-day/scripts/search_arxiv.py --config config.yaml
 ```
 
 This outputs a JSON array of papers to stdout. Capture the output.
@@ -62,7 +62,7 @@ Pipe the (optionally enriched) papers through the scoring engine:
 
 ```bash
 cd "$REPO_ROOT"
-echo '$PAPERS_JSON' | python3 skills/start-my-day/scripts/score_papers.py --config config.yaml
+echo '$PAPERS_JSON' | python3 .claude/skills/start-my-day/scripts/score_papers.py --config config.yaml
 ```
 
 This outputs scored papers sorted by composite_score (descending), capped at `daily_top_n`.
