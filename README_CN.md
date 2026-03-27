@@ -219,7 +219,7 @@ notion-research-flow/
 
 ## 致谢
 
-受 [evil-read-arxiv](https://github.com/Mengyanz/evil-read-arxiv) 和 [ArxivDigest](https://github.com/AutoLLM/ArxivDigest) 启发，它们是自动化 arXiv 论文评分与发现工作流的先驱。
+受 [evil-read-arxiv](https://github.com/juliye2025/evil-read-arxiv) 和 [ArxivDigest](https://github.com/AutoLLM/ArxivDigest) 启发，它们是自动化 arXiv 论文评分与发现工作流的先驱。
 
 ## 许可证
 

@@ -223,7 +223,7 @@ Contributions welcome! Please open an issue or pull request.
 
 ## Acknowledgments
 
-Inspired by [evil-read-arxiv](https://github.com/Mengyanz/evil-read-arxiv) and [ArxivDigest](https://github.com/AutoLLM/ArxivDigest), which pioneered automated arXiv paper scoring and discovery workflows.
+Inspired by [evil-read-arxiv](https://github.com/juliye2025/evil-read-arxiv) and [ArxivDigest](https://github.com/AutoLLM/ArxivDigest), which pioneered automated arXiv paper scoring and discovery workflows.
 
 ## License
 
