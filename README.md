@@ -10,6 +10,8 @@
 
 > Say `/start-my-day` every morning. Claude searches arXiv, scores papers with 5D signals, and pushes them to your Notion library — fully automated.
 
+![notion-research-flow banner](docs/screenshots/promo.svg)
+
 <!-- demo gif: record a 30s screen capture of /start-my-day → Notion database populating, then replace this comment -->
 <!-- ![demo](docs/screenshots/demo.gif) -->
 
