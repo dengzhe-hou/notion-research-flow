@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1e3a"/>
+      <stop offset="100%" stop-color="#1a2040"/>
+    </linearGradient>
+    <linearGradient id="c1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a1a1a"/>
+      <stop offset="100%" stop-color="#2a1010"/>
+    </linearGradient>
+    <linearGradient id="c2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#251d50"/>
+      <stop offset="100%" stop-color="#1c1640"/>
+    </linearGradient>
+    <linearGradient id="c3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e2d44"/>
+      <stop offset="100%" stop-color="#0a1f30"/>
+    </linearGradient>
+    <filter id="gr"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="gp"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="gb"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="sh"><feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#000" flood-opacity="0.4"/></filter>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0,9 3.5,0 7" fill="#8b7cf8"/>
+    </marker>
+  </defs>
+
+  <!-- BG -->
+  <rect width="1000" height="500" fill="url(#bg)"/>
+  <circle cx="500" cy="250" r="380" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.05"/>
+
+  <!-- HEADER -->
+  <text x="500" y="44" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="700" letter-spacing="2">notion-research-flow</text>
+  <text x="500" y="66" text-anchor="middle" fill="#a0aec0" font-size="14">Claude Code + Notion MCP  —  Automated Research Paper Library</text>
+  <line x1="150" y1="80" x2="850" y2="80" stroke="#ffffff" stroke-width="0.5" opacity="0.12"/>
+
+  <!-- ════════ CARD 1: arXiv ════════ -->
+  <rect x="28" y="92" width="242" height="368" fill="url(#c1)" rx="14" filter="url(#sh)"/>
+  <rect x="28" y="92" width="242" height="368" fill="none" stroke="#fc6161" stroke-width="1.5" rx="14" opacity="0.7"/>
+  <rect x="28" y="92" width="242" height="4" fill="#fc6161" rx="2"/>
+
+  <!-- arXiv doc stack -->
+  <rect x="115" y="110" width="70" height="88" fill="#7f1d1d" rx="6" opacity="0.45" transform="rotate(-7,150,154)"/>
+  <rect x="115" y="110" width="70" height="88" fill="#991b1b" rx="6" opacity="0.65" transform="rotate(-3,150,154)"/>
+  <rect x="112" y="108" width="70" height="88" fill="#dc2626" rx="6" filter="url(#gr)"/>
+  <polygon points="164,108 182,108 182,126" fill="#b91c1c"/>
+  <polygon points="164,108 182,126 164,126" fill="#7f1d1d" opacity="0.5"/>
+  <text x="128" y="128" fill="#fca5a5" font-size="12" font-weight="700">arXiv</text>
+  <rect x="122" y="138" width="48" height="4" fill="#fff" opacity="0.55" rx="2"/>
+  <rect x="122" y="150" width="38" height="4" fill="#fff" opacity="0.45" rx="2"/>
+  <rect x="122" y="162" width="44" height="4" fill="#fff" opacity="0.45" rx="2"/>
+  <rect x="122" y="174" width="32" height="4" fill="#fff" opacity="0.35" rx="2"/>
+
+  <text x="149" y="224" text-anchor="middle" fill="#fc6161" font-size="18" font-weight="700">arXiv Search</text>
+  <text x="149" y="244" text-anchor="middle" fill="#9ca3af" font-size="12">Daily papers, auto-fetched</text>
+
+  <!-- Stats -->
+  <rect x="42" y="260" width="214" height="36" fill="#200c0c" rx="8"/>
+  <text x="56" y="282" fill="#9ca3af" font-size="12">Source</text>
+  <text x="246" y="282" text-anchor="end" fill="#fca5a5" font-size="12" font-weight="600">arXiv + Semantic Scholar</text>
+
+  <rect x="42" y="302" width="214" height="36" fill="#200c0c" rx="8"/>
+  <text x="56" y="324" fill="#9ca3af" font-size="12">Lookback</text>
+  <text x="246" y="324" text-anchor="end" fill="#fca5a5" font-size="12" font-weight="600">7 days, configurable</text>
+
+  <rect x="42" y="344" width="214" height="36" fill="#200c0c" rx="8"/>
+  <text x="56" y="366" fill="#9ca3af" font-size="12">Categories</text>
+  <text x="246" y="366" text-anchor="end" fill="#fca5a5" font-size="12" font-weight="600">cs.AI / cs.LG / cs.CL</text>
+
+  <rect x="42" y="386" width="214" height="36" fill="#200c0c" rx="8"/>
+  <text x="56" y="408" fill="#9ca3af" font-size="12">Dedup</text>
+  <text x="246" y="408" text-anchor="end" fill="#fca5a5" font-size="12" font-weight="600">Local ArXiv ID cache</text>
+
+  <rect x="135" y="432" width="28" height="22" fill="#dc2626" rx="11" opacity="0.25"/>
+  <text x="149" y="448" text-anchor="middle" fill="#fc6161" font-size="13" font-weight="700">01</text>
+
+  <!-- ARROW 1 -->
+  <line x1="278" y1="276" x2="348" y2="276" stroke="#8b7cf8" stroke-width="2.5" marker-end="url(#arr)" stroke-dasharray="6,4"/>
+  <text x="313" y="264" text-anchor="middle" fill="#8b7cf8" font-size="11" font-weight="600">SCORE</text>
+
+  <!-- ════════ CARD 2: Claude Code ════════ -->
+  <rect x="360" y="92" width="280" height="368" fill="url(#c2)" rx="14" filter="url(#sh)"/>
+  <rect x="360" y="92" width="280" height="368" fill="none" stroke="#9b8df8" stroke-width="2" rx="14" opacity="0.8" filter="url(#gp)"/>
+  <rect x="360" y="92" width="280" height="4" fill="#9b8df8" rx="2"/>
+
+  <!-- Robot -->
+  <rect x="495" y="106" width="10" height="18" fill="#7c6af7" rx="3"/>
+  <circle cx="500" cy="104" r="9" fill="#b8a9fc" filter="url(#gp)"/>
+  <circle cx="500" cy="104" r="4" fill="#ede9fe"/>
+
+  <rect x="466" y="124" width="68" height="52" fill="#2a1e60" rx="10"/>
+  <rect x="466" y="124" width="68" height="52" fill="none" stroke="#8b7cf8" stroke-width="1.5" rx="10" opacity="0.9"/>
+  <rect x="475" y="137" width="15" height="10" fill="#7c6af7" rx="3" filter="url(#gp)"/>
+  <rect x="500" y="137" width="15" height="10" fill="#7c6af7" rx="3" filter="url(#gp)"/>
+  <rect x="477" y="139" width="5" height="4" fill="#ede9fe" rx="1"/>
+  <rect x="502" y="139" width="5" height="4" fill="#ede9fe" rx="1"/>
+  <path d="M 478 160 Q 500 170 522 160" fill="none" stroke="#8b7cf8" stroke-width="2.5" stroke-linecap="round" filter="url(#gp)"/>
+
+  <rect x="472" y="180" width="56" height="36" fill="#1c1450" rx="8"/>
+  <rect x="472" y="180" width="56" height="36" fill="none" stroke="#6d5dfc" stroke-width="1" rx="8" opacity="0.6"/>
+  <rect x="480" y="188" width="40" height="20" fill="#4a3aaa" rx="5" opacity="0.9"/>
+  <text x="500" y="202" text-anchor="middle" fill="#ede9fe" font-size="11" font-weight="700">CC</text>
+
+  <rect x="452" y="182" width="18" height="10" fill="#2a1e60" rx="5"/>
+  <rect x="530" y="182" width="18" height="10" fill="#2a1e60" rx="5"/>
+
+  <text x="500" y="246" text-anchor="middle" fill="#b8a9fc" font-size="18" font-weight="700">Claude Code</text>
+  <text x="500" y="266" text-anchor="middle" fill="#9ca3af" font-size="12">Analyze · Score · Generate TL;DR</text>
+
+  <!-- 2x2 stats grid -->
+  <rect x="374" y="282" width="120" height="60" fill="#130e30" rx="8"/>
+  <text x="434" y="304" text-anchor="middle" fill="#9ca3af" font-size="12">Dimensions</text>
+  <text x="434" y="330" text-anchor="middle" fill="#b8a9fc" font-size="24" font-weight="700">5D</text>
+
+  <rect x="506" y="282" width="120" height="60" fill="#130e30" rx="8"/>
+  <text x="566" y="304" text-anchor="middle" fill="#9ca3af" font-size="12">Skills</text>
+  <text x="566" y="330" text-anchor="middle" fill="#b8a9fc" font-size="24" font-weight="700">7</text>
+
+  <rect x="374" y="350" width="120" height="60" fill="#130e30" rx="8"/>
+  <text x="434" y="372" text-anchor="middle" fill="#9ca3af" font-size="12">Papers/day</text>
+  <text x="434" y="398" text-anchor="middle" fill="#b8a9fc" font-size="24" font-weight="700">20+</text>
+
+  <rect x="506" y="350" width="120" height="60" fill="#130e30" rx="8"/>
+  <text x="566" y="372" text-anchor="middle" fill="#9ca3af" font-size="12">Sources</text>
+  <text x="566" y="398" text-anchor="middle" fill="#b8a9fc" font-size="24" font-weight="700">4</text>
+
+  <!-- Commands -->
+  <rect x="374" y="420" width="252" height="28" fill="#130e30" rx="7"/>
+  <text x="500" y="438" text-anchor="middle" fill="#6d5dfc" font-size="11">/start-my-day  /paper-analyze  /conf-papers</text>
+
+  <rect x="486" y="454" width="28" height="22" fill="#7c6af7" rx="11" opacity="0.25"/>
+  <text x="500" y="470" text-anchor="middle" fill="#b8a9fc" font-size="13" font-weight="700">02</text>
+
+  <!-- ARROW 2 -->
+  <line x1="648" y1="276" x2="718" y2="276" stroke="#8b7cf8" stroke-width="2.5" marker-end="url(#arr)" stroke-dasharray="6,4"/>
+  <text x="683" y="264" text-anchor="middle" fill="#8b7cf8" font-size="11" font-weight="600">PUSH</text>
+
+  <!-- ════════ CARD 3: Notion ════════ -->
+  <rect x="730" y="92" width="242" height="368" fill="url(#c3)" rx="14" filter="url(#sh)"/>
+  <rect x="730" y="92" width="242" height="368" fill="none" stroke="#56c8f0" stroke-width="1.5" rx="14" opacity="0.7"/>
+  <rect x="730" y="92" width="242" height="4" fill="#56c8f0" rx="2"/>
+
+  <!-- N icon -->
+  <rect x="827" y="110" width="46" height="46" fill="#0a2030" rx="10"/>
+  <rect x="827" y="110" width="46" height="46" fill="none" stroke="#56c8f0" stroke-width="1.5" rx="10" opacity="0.8"/>
+  <text x="850" y="145" text-anchor="middle" fill="#56c8f0" font-size="26" font-weight="900">N</text>
+
+  <!-- Mini table -->
+  <rect x="740" y="166" width="222" height="16" fill="#071c2c" rx="4"/>
+  <text x="750" y="177" fill="#56c8f0" font-size="9" font-weight="700">Title</text>
+  <text x="890" y="177" fill="#56c8f0" font-size="9">Score</text>
+  <text x="934" y="177" fill="#56c8f0" font-size="9">Tag</text>
+
+  <!-- Row 1 -->
+  <rect x="740" y="184" width="222" height="16" fill="#061520" rx="2"/>
+  <rect x="740" y="184" width="3" height="16" fill="#e53e3e"/>
+  <text x="748" y="195" fill="#e2e8f0" font-size="8">EEG Brain-LLM Interface</text>
+  <text x="894" y="195" fill="#b8a9fc" font-size="9" font-weight="700">9.0</text>
+  <rect x="930" y="186" width="26" height="12" fill="#052e16" rx="6"/>
+  <text x="943" y="195" text-anchor="middle" fill="#4ade80" font-size="8">New</text>
+
+  <!-- Row 2 -->
+  <rect x="740" y="202" width="222" height="16" fill="#071c2c" rx="2"/>
+  <rect x="740" y="202" width="3" height="16" fill="#e53e3e"/>
+  <text x="748" y="213" fill="#e2e8f0" font-size="8">NeuroNarrator Foundation</text>
+  <text x="894" y="213" fill="#b8a9fc" font-size="9" font-weight="700">8.9</text>
+  <rect x="930" y="204" width="26" height="12" fill="#052e16" rx="6"/>
+  <text x="943" y="213" text-anchor="middle" fill="#4ade80" font-size="8">New</text>
+
+  <!-- Row 3 -->
+  <rect x="740" y="220" width="222" height="16" fill="#061520" rx="2"/>
+  <rect x="740" y="220" width="3" height="16" fill="#3b82f6"/>
+  <text x="748" y="231" fill="#e2e8f0" font-size="8">Demographic Fairness LLMs</text>
+  <text x="894" y="231" fill="#b8a9fc" font-size="9" font-weight="700">8.3</text>
+  <rect x="930" y="222" width="26" height="12" fill="#052e16" rx="6"/>
+  <text x="943" y="231" text-anchor="middle" fill="#4ade80" font-size="8">New</text>
+
+  <!-- Row 4 -->
+  <rect x="740" y="238" width="222" height="16" fill="#071c2c" rx="2"/>
+  <rect x="740" y="238" width="3" height="16" fill="#3b82f6"/>
+  <text x="748" y="249" fill="#e2e8f0" font-size="8">EcoThink Green Inference</text>
+  <text x="894" y="249" fill="#b8a9fc" font-size="9" font-weight="700">8.2</text>
+  <rect x="930" y="240" width="26" height="12" fill="#052e16" rx="6"/>
+  <text x="943" y="249" text-anchor="middle" fill="#4ade80" font-size="8">New</text>
+
+  <text x="851" y="270" text-anchor="middle" fill="#4b5563" font-size="10">+ 9 more papers...</text>
+
+  <text x="851" y="302" text-anchor="middle" fill="#56c8f0" font-size="18" font-weight="700">Notion Library</text>
+  <text x="851" y="322" text-anchor="middle" fill="#9ca3af" font-size="12">8 Views  |  22 Properties</text>
+
+  <rect x="744" y="336" width="214" height="34" fill="#071520" rx="8"/>
+  <text x="851" y="356" text-anchor="middle" fill="#4a7a90" font-size="12">By Score  /  By Domain  /  Team</text>
+
+  <rect x="744" y="378" width="100" height="34" fill="#071520" rx="8"/>
+  <text x="794" y="398" text-anchor="middle" fill="#4a7a90" font-size="12">Timeline</text>
+
+  <rect x="854" y="378" width="104" height="34" fill="#071520" rx="8"/>
+  <text x="906" y="398" text-anchor="middle" fill="#4a7a90" font-size="12">Conference</text>
+
+  <rect x="744" y="420" width="214" height="34" fill="#071520" rx="8"/>
+  <text x="851" y="440" text-anchor="middle" fill="#4a7a90" font-size="12">Reading Status  /  Trending</text>
+
+  <rect x="837" y="454" width="28" height="22" fill="#56c8f0" rx="11" opacity="0.2"/>
+  <text x="851" y="470" text-anchor="middle" fill="#56c8f0" font-size="13" font-weight="700">03</text>
+
+  <!-- FOOTER -->
+  <line x1="60" y1="484" x2="940" y2="484" stroke="#ffffff" stroke-width="0.5" opacity="0.08"/>
+  <text x="500" y="496" text-anchor="middle" fill="#374151" font-size="11">github.com/dengzhe-hou/notion-research-flow</text>
+</svg>
