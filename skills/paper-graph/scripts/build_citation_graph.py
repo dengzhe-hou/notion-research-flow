@@ -19,7 +19,7 @@ FIELDS = "title,citationCount,year,externalIds,url,authors"
 DELAY = 1.0  # seconds between API calls
 
 
-def _api_get(url, api_key=None, retries=2):
+def _api_get(url, api_key=None, retries=3):
     """Make a GET request to Semantic Scholar API with retry on 429."""
     headers = {"Accept": "application/json"}
     if api_key:
@@ -32,7 +32,9 @@ def _api_get(url, api_key=None, retries=2):
                 return json.loads(resp.read().decode())
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < retries:
-                time.sleep(5)
+                wait = 5 * (attempt + 1)  # exponential: 5, 10, 15s
+                print(f"Rate limited, waiting {wait}s... (attempt {attempt+1}/{retries})", file=sys.stderr)
+                time.sleep(wait)
                 continue
             elif e.code == 404:
                 return None
@@ -61,11 +63,12 @@ def resolve_paper(identifier, api_key=None):
         if result:
             return result
 
-    # Try as S2 ID or CorpusId
-    url = f"{API_BASE}/paper/{identifier}?fields={FIELDS}"
-    result = _api_get(url, api_key)
-    if result:
-        return result
+    # Try as S2 ID or CorpusId (only if it looks like an ID — no spaces)
+    if " " not in identifier:
+        url = f"{API_BASE}/paper/{identifier}?fields={FIELDS}"
+        result = _api_get(url, api_key)
+        if result:
+            return result
 
     # Fallback: search by title
     query = urllib.parse.quote(identifier)
