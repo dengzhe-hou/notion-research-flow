@@ -13,6 +13,9 @@ build/
 venv/
 .venv/
 
+# Claude Code (local symlinks)
+.claude/
+
 # IDE
 .vscode/
 .idea/

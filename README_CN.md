@@ -119,8 +119,9 @@ pip install -r requirements.txt
 cp config.example.yaml config.yaml
 # 编辑 config.yaml，填入你的研究方向
 
-# 2. 安装 skills 到 Claude Code
-ln -s $(pwd)/skills/* ~/.claude/skills/
+# 2. 安装 skills 到 Claude Code（项目级）
+mkdir -p .claude/skills
+ln -s $(pwd)/skills/* .claude/skills/
 
 # 3. 在 Claude Code 中使用
 ```

@@ -117,8 +117,9 @@ pip install -r requirements.txt
 cp config.example.yaml config.yaml
 # Edit config.yaml with your research interests
 
-# 2. Install skills to Claude Code
-ln -s $(pwd)/skills/* ~/.claude/skills/
+# 2. Install skills to Claude Code (project-level)
+mkdir -p .claude/skills
+ln -s $(pwd)/skills/* .claude/skills/
 
 # 3. Use in Claude Code
 ```
