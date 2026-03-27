@@ -5,8 +5,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blueviolet)](https://docs.anthropic.com/en/docs/claude-code)
 [![Notion MCP](https://img.shields.io/badge/Notion-MCP-black)](https://www.notion.com/)
+[![arXiv](https://img.shields.io/badge/arXiv-每日更新-red)](https://arxiv.org)
+[![Stars](https://img.shields.io/github/stars/dengzhe-hou/notion-research-flow?style=social)](https://github.com/dengzhe-hou/notion-research-flow)
 
-> 首个将 Notion 变成全功能论文管理系统的 Claude Code 技能套件 —— 智能评分、多源聚合、团队协作。
+> 每天早上说一句 `/start-my-day`，Claude 自动搜 arXiv、5 维评分、推送 Notion ——全程零手动。
+
+<!-- demo gif: 录制 /start-my-day → Notion 数据库自动填充的 30 秒视频，替换下面的注释 -->
+<!-- ![demo](docs/screenshots/demo.gif) -->
 
 [English](README.md) | [快速上手](QUICKSTART.md)
 

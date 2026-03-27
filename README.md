@@ -5,8 +5,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blueviolet)](https://docs.anthropic.com/en/docs/claude-code)
 [![Notion MCP](https://img.shields.io/badge/Notion-MCP-black)](https://www.notion.com/)
+[![arXiv](https://img.shields.io/badge/arXiv-daily-red)](https://arxiv.org)
+[![Stars](https://img.shields.io/github/stars/dengzhe-hou/notion-research-flow?style=social)](https://github.com/dengzhe-hou/notion-research-flow)
 
-> The first Claude Code skill suite that turns Notion into a full-featured research paper management system — with intelligent scoring, multi-source aggregation, and team collaboration.
+> Say `/start-my-day` every morning. Claude searches arXiv, scores papers with 5D signals, and pushes them to your Notion library — fully automated.
+
+<!-- demo gif: record a 30s screen capture of /start-my-day → Notion database populating, then replace this comment -->
+<!-- ![demo](docs/screenshots/demo.gif) -->
 
 [中文文档](README_CN.md) | [Quick Start](QUICKSTART.md)
 
