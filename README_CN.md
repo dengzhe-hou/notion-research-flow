@@ -23,7 +23,6 @@
 | 团队协作 | 无 | 无 | 无 | **分配/评论/看板** |
 | 初始化 | 手动配置 | 手动 | 手动 | **一键 setup** |
 | 会议追踪 | DBLP | 无 | 无 | **DBLP + 专属视图** |
-| 引用图谱 | 无 | 无 | 无 | **Connected Papers 风格可视化** |
 | 每周摘要 | 无 | 无 | 无 | **自动生成** |
 
 ## 功能特性
@@ -42,7 +41,6 @@
 ### 深度分析 & 搜索
 - `/paper-analyze` —— 深度论文分析 + PDF 文本提取（PyMuPDF）
 - `/paper-search` —— 按关键词、领域、评分、状态、日期搜索 Notion 论文库
-- `/paper-graph` —— Connected Papers 风格引用关系图谱（基于 Semantic Scholar，Mermaid 可视化）
 
 ### 团队协作 & 报告
 - `/team-sync` —— 分配论文、查看分配、追踪团队阅读进度
@@ -134,7 +132,6 @@ ln -s $(pwd)/skills/* .claude/skills/
 /setup-workspace          # 创建 Notion 论文数据库（仅需一次）
 /start-my-day             # 获取今日推荐论文
 /paper-analyze 2301.07041 # 深度分析指定论文
-/paper-graph 2301.07041   # 引用关系图谱（Connected Papers 风格）
 /conf-papers NeurIPS 2025 # 追踪会议论文
 /paper-search transformer # 搜索论文库
 /weekly-digest            # 生成本周摘要
@@ -210,8 +207,6 @@ notion-research-flow/
 │   │   └── scripts/             # search_semantic_scholar.py + search_dblp.py
 │   ├── paper-analyze/           # 深度论文分析
 │   │   └── scripts/             # extract_pdf.py（PyMuPDF）
-│   ├── paper-graph/             # 引用关系图谱
-│   │   └── scripts/             # build_citation_graph.py（Semantic Scholar）
 │   ├── paper-search/            # Notion 论文库搜索
 │   ├── team-sync/               # 团队分配与进度
 │   └── weekly-digest/           # 每周研究摘要

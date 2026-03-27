@@ -23,7 +23,6 @@
 | Team collaboration | None | None | None | **Assign / Comment / Kanban** |
 | Setup effort | Manual config | Manual | Manual | **One-command setup** |
 | Conference tracking | DBLP | None | None | **DBLP + dedicated views** |
-| Citation graph | None | None | None | **Connected Papers-style visualization** |
 | Weekly digest | None | None | None | **Auto-generated** |
 
 ## Features
@@ -42,7 +41,6 @@
 ### Deep Analysis & Search
 - `/paper-analyze` — Deep paper analysis with PDF extraction (PyMuPDF)
 - `/paper-search` — Search across your Notion library by keyword, domain, score, status, or date
-- `/paper-graph` — Connected Papers-style citation graph via Semantic Scholar (Mermaid visualization)
 
 ### Team Collaboration & Reporting
 - `/team-sync` — Assign papers, view assignments, track team reading progress
@@ -132,7 +130,6 @@ Then in Claude Code:
 /setup-workspace          # Create Notion database (one-time)
 /start-my-day             # Fetch today's papers
 /paper-analyze 2301.07041 # Deep-read a paper
-/paper-graph 2301.07041   # Citation graph (Connected Papers-style)
 /conf-papers NeurIPS 2025 # Track conference papers
 /paper-search transformer # Search your library
 /weekly-digest            # Generate weekly summary
@@ -214,8 +211,6 @@ notion-research-flow/
 │   │   └── scripts/             # search_semantic_scholar.py + search_dblp.py
 │   ├── paper-analyze/           # Deep paper analysis
 │   │   └── scripts/             # extract_pdf.py (PyMuPDF)
-│   ├── paper-graph/             # Citation graph visualization
-│   │   └── scripts/             # build_citation_graph.py (Semantic Scholar)
 │   ├── paper-search/            # Notion library search
 │   ├── team-sync/               # Team assignment & progress
 │   └── weekly-digest/           # Weekly research summary
